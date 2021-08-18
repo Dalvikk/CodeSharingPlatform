@@ -27,7 +27,9 @@ RequestBody should be JSON with the following fields:
 
 ## Compile and run
 
-`git clone https://github.com/Dalvikk/CodeSharingPlatform`  
-`cd ./CodeSharingPlatform/`  
-`./gradlew.bat bootJar`  
-`java -jar java -jar ./build/libs/snippet.jar`  
+```
+git clone https://github.com/Dalvikk/CodeSharingPlatform
+cd ./CodeSharingPlatform/
+./gradlew.bat bootJar
+java -jar java -jar ./build/libs/snippet.jar
+```
