@@ -31,5 +31,5 @@ RequestBody should be JSON with the following fields:
 git clone https://github.com/Dalvikk/CodeSharingPlatform
 cd ./CodeSharingPlatform/
 ./gradlew.bat bootJar
-java -jar java -jar ./build/libs/snippet.jar
+java -jar ./build/libs/snippet.jar
 ```
