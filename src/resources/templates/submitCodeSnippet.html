@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Create</title>
+    <link rel="stylesheet" th:href="@{/css/submitCode.css}">
+    <script type="text/javascript" th:src="@{/js/sendSnippet.js}"></script>
+</head>
+<body>
+<label>Time limit (in minutes): <input id="time_restriction" type="text"/></label>
+<br>
+<label>Views limit: <input id="views_restriction" type="text"/></label>
+<br>
+<textarea id="code_snippet">// Write your code here</textarea>
+<br>
+<button id="send_snippet" type="submit" onclick="send()">Submit</button>
+</body>
+</html>

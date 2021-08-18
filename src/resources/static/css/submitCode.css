@@ -1,0 +1,8 @@
+#code_snippet {
+    width: 50vw;
+    height: 40vh;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+}
