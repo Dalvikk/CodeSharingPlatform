@@ -24,35 +24,30 @@ public class ApiUtils {
     }
 
     private static String getStringByKey(@NotNull Map<String, Object> map, @NotNull String key) {
-        Object value = map.get(key);
-        if (value == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value can't be empty");
-        }
-        if (value instanceof String) {
-            return (String) value;
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value should be a String");
+        return getClassOrNullOrThrowByKey(map, key, String.class, false);
     }
 
     private static String getStringOrNullByKey(@NotNull Map<String, Object> map, @NotNull String key) {
-        Object value = map.get(key);
-        if (value == null) {
-            return null;
-        }
-        if (value instanceof String) {
-            return (String) value;
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value should be a String");
+        return getClassOrNullOrThrowByKey(map, key, String.class, true);
     }
 
     private static Integer getIntegerOrNullByKey(@NotNull Map<String, Object> map, @NotNull String key) {
+        return getClassOrNullOrThrowByKey(map, key, Integer.class, true);
+    }
+
+    private static <T> T getClassOrNullOrThrowByKey(@NotNull Map<String, Object> map, @NotNull String key,
+                                                    Class<T> type, boolean nullable) {
         Object value = map.get(key);
         if (value == null) {
-            return null;
+            if (nullable) {
+                return null;
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value can't be empty");
+            }
         }
-        if (value instanceof Integer) {
-            return (Integer) value;
+        if (value.getClass() == type) {
+            return type.cast(value);
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value should be an Integer");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value should be " + type.toString());
     }
 }
