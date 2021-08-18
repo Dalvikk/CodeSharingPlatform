@@ -1,14 +1,13 @@
 package platform.controllers;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import platform.persistence.RepositoryService;
 import platform.entries.CodeSnippet;
+import platform.persistence.RepositoryService;
 
 import java.util.Map;
 import java.util.Optional;
@@ -48,50 +47,8 @@ public class ApiController {
     @PostMapping(value = "/api/code/new", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String addSnippet(@RequestBody Map<String, Object> map) {
-        CodeSnippet snippet = new CodeSnippet(getStringByKey(map, "code"));
-        snippet.setViewsLimit(getIntegerOrNullByKey(map, "viewsLimit"));
-        Integer minutesLimit = getIntegerOrNullByKey(map, "minutesLimit");
-        String header = getStringOrNullByKey(map, "header");
-        if (minutesLimit != null) {
-            snippet.setDeleteDate(snippet.getCreateDate().plusMinutes(minutesLimit));
-        }
-        if (header != null) {
-            snippet.setHeader(header);
-        }
+        CodeSnippet snippet = ApiUtils.parseSnippetFromJSON(map);
         service.save(snippet);
         return snippet.getSnippetUUID();
-    }
-
-    private String getStringByKey(@NotNull Map<String, Object> map, @NotNull String key) {
-        Object value = map.get(key);
-        if (value == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value can't be empty");
-        }
-        if (value instanceof String) {
-            return (String) value;
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value should be a String");
-    }
-
-    private String getStringOrNullByKey(@NotNull Map<String, Object> map, @NotNull String key) {
-        Object value = map.get(key);
-        if (value == null) {
-            return null;
-        }
-        if (value instanceof String) {
-            return (String) value;
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value should be a String");
-    }
-
-    private Integer getIntegerOrNullByKey(@NotNull Map<String, Object> map, @NotNull String key) {
-        Object value = map.get(key);
-        if (value == null) {
-            return null;
-        }
-        if (value instanceof Integer) {
-            return (Integer) value;
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value should be an Integer");
     }
 }
