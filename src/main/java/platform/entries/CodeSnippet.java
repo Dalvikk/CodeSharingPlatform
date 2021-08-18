@@ -22,7 +22,6 @@ public class CodeSnippet {
     @NotNull
     @Column(length = 65536)
     private String code = "";
-
     @NotNull
     private String header = "Untitled";
     @NotNull
