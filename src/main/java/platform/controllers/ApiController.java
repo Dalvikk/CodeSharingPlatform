@@ -51,8 +51,12 @@ public class ApiController {
         CodeSnippet snippet = new CodeSnippet(getStringByKey(map, "code"));
         snippet.setViewsLimit(getIntegerOrNullByKey(map, "viewsLimit"));
         Integer minutesLimit = getIntegerOrNullByKey(map, "minutesLimit");
+        String header = getStringOrNullByKey(map, "header");
         if (minutesLimit != null) {
             snippet.setDeleteDate(snippet.getCreateDate().plusMinutes(minutesLimit));
+        }
+        if (header != null) {
+            snippet.setHeader(header);
         }
         service.save(snippet);
         return snippet.getSnippetUUID();
@@ -62,6 +66,17 @@ public class ApiController {
         Object value = map.get(key);
         if (value == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value can't be empty");
+        }
+        if (value instanceof String) {
+            return (String) value;
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, key + " value should be a String");
+    }
+
+    private String getStringOrNullByKey(@NotNull Map<String, Object> map, @NotNull String key) {
+        Object value = map.get(key);
+        if (value == null) {
+            return null;
         }
         if (value instanceof String) {
             return (String) value;

@@ -6,3 +6,11 @@
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px #999;
 }
+
+#snippet_header {
+    width: 50vw;
+    height: 5vh;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+}

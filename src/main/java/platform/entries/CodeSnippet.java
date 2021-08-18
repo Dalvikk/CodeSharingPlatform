@@ -22,6 +22,9 @@ public class CodeSnippet {
     @NotNull
     @Column(length = 65536)
     private String code = "";
+
+    @NotNull
+    private String header = "Untitled";
     @NotNull
     private LocalDateTime createDate = LocalDateTime.now();
 
@@ -37,6 +40,11 @@ public class CodeSnippet {
 
     public CodeSnippet(@NotNull String code) {
         this.code = code;
+    }
+
+    public CodeSnippet(@NotNull String code, @NotNull String header) {
+        this.code = code;
+        this.header = header;
     }
 
     public boolean checkIsRestricted() {
@@ -98,17 +106,20 @@ public class CodeSnippet {
         this.viewsLimit = viewsLimit;
     }
 
+    public @NotNull String getHeader() {
+        return header;
+    }
+
+    public void setHeader(@NotNull String header) {
+        this.header = header;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CodeSnippet that = (CodeSnippet) o;
-        return views == that.views && snippetUUID.equals(that.snippetUUID) && code.equals(that.code) && createDate.equals(that.createDate) && Objects.equals(deleteDate, that.deleteDate) && Objects.equals(viewsLimit, that.viewsLimit);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(snippetUUID, code, createDate, views, deleteDate, viewsLimit);
+        return views == that.views && snippetUUID.equals(that.snippetUUID) && code.equals(that.code) && header.equals(that.header) && createDate.equals(that.createDate) && Objects.equals(deleteDate, that.deleteDate) && Objects.equals(viewsLimit, that.viewsLimit);
     }
 
     @Override
@@ -116,10 +127,16 @@ public class CodeSnippet {
         return "CodeSnippet{" +
                 "snippetUUID='" + snippetUUID + '\'' +
                 ", code='" + code + '\'' +
+                ", header='" + header + '\'' +
                 ", createDate=" + createDate +
                 ", views=" + views +
                 ", deleteDate=" + deleteDate +
                 ", viewsLimit=" + viewsLimit +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(snippetUUID, code, header, createDate, views, deleteDate, viewsLimit);
     }
 }

@@ -14,11 +14,15 @@ function createObject() {
     };
     let minutesLimit = document.getElementById("time_restriction").value;
     let viewsLimit = document.getElementById("views_restriction").value;
+    let header = document.getElementById("snippet_header").value;
     if (minutesLimit !== "") {
         object.minutesLimit = parseNumberOrThrowElse(minutesLimit);
     }
     if (viewsLimit !== "") {
         object.viewsLimit = parseNumberOrThrowElse(viewsLimit);
+    }
+    if (header !== "") {
+        object.header = header;
     }
     return object;
 }

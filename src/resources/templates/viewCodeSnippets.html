@@ -11,7 +11,7 @@
 </head>
 <body>
 <div th:each="snippet: ${snippets}">
-    <h2 th:text="'Number ' + ${snippetStat.index + 1}"></h2>
+    <h2 th:text = "${snippet.getHeader()}"></h2>
     <span th:text="'Created: ' + ${snippet.getCreateDate()}"></span>
     <br>
     <span th:text="'Available until: ' + (${snippet.getDeleteDate()} ?: 'Forever')"></span>
