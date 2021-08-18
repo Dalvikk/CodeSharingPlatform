@@ -1,4 +1,4 @@
-package platform.controller;
+package platform.controllers;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
